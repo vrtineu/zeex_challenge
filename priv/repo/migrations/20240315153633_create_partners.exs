@@ -7,6 +7,8 @@ defmodule Zeex.Repo.Migrations.CreatePartners do
       add :trading_name, :string
       add :owner_name, :string
       add :document, :string
+      add :coverage_area, :geometry
+      add :address, :geometry
 
       timestamps(type: :utc_datetime)
     end
