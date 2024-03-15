@@ -7,6 +7,8 @@ defmodule ZeexWeb.Router do
 
   scope "/api", ZeexWeb do
     pipe_through :api
+
+    resources "/partners", PartnerController, except: [:new, :edit]
   end
 
   # Enable LiveDashboard in development
