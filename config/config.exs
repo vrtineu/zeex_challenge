@@ -9,7 +9,8 @@ import Config
 
 config :zeex,
   ecto_repos: [Zeex.Repo],
-  generators: [timestamp_type: :utc_datetime, binary_id: true]
+  generators: [timestamp_type: :utc_datetime, binary_id: true],
+  types: Zeex.PostgresTypes
 
 # Configures the endpoint
 config :zeex, ZeexWeb.Endpoint,
@@ -29,6 +30,9 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :geo_postgis,
+  json_library: Jason
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
