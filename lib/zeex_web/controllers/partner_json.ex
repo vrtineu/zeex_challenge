@@ -18,9 +18,11 @@ defmodule ZeexWeb.PartnerJSON do
   defp data(%Partner{} = partner) do
     %{
       id: partner.id,
-      trading_name: partner.trading_name,
-      owner_name: partner.owner_name,
-      document: partner.document
+      tradingName: partner.trading_name,
+      ownerName: partner.owner_name,
+      document: partner.document,
+      address: partner.address,
+      coverageArea: partner.coverage_area
     }
   end
 end
