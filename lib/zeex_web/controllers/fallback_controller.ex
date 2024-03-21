@@ -21,4 +21,11 @@ defmodule ZeexWeb.FallbackController do
     |> put_view(html: ZeexWeb.ErrorHTML, json: ZeexWeb.ErrorJSON)
     |> render(:"404")
   end
+
+  def call(conn, {:error, :invalid_geo}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> put_view(json: ZeexWeb.ErrorJSON)
+    |> render(:"422")
+  end
 end

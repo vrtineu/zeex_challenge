@@ -8,14 +8,28 @@ defmodule ZeexWeb.PartnerControllerTest do
   @create_attrs %{
     trading_name: "some trading_name",
     owner_name: "some owner_name",
-    document: "some document"
+    document: "some document",
+    address: %{
+      coordinates: [30, -90],
+      type: "Point"
+    },
+    coverageArea: %{
+      coordinates: [[[30, -90], [30, -89], [31, -89], [31, -90], [30, -90]]],
+      type: "Polygon"
+    }
   }
   @update_attrs %{
     trading_name: "some updated trading_name",
     owner_name: "some updated owner_name",
     document: "some updated document"
   }
-  @invalid_attrs %{trading_name: nil, owner_name: nil, document: nil}
+  @invalid_attrs %{
+    tradingName: nil,
+    ownerName: nil,
+    document: nil,
+    address: nil,
+    coverageArea: nil
+  }
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -38,8 +52,15 @@ defmodule ZeexWeb.PartnerControllerTest do
       assert %{
                "id" => ^id,
                "document" => "some document",
-               "owner_name" => "some owner_name",
-               "trading_name" => "some trading_name"
+               "ownerName" => "some owner_name",
+               "tradingName" => "some trading_name",
+               "address" => %{"coordinates" => [30.0, -90.0], "type" => "Point"},
+               "coverageArea" => %{
+                 "coordinates" => [
+                   [[30.0, -90.0], [30.0, -89.0], [31.0, -89.0], [31.0, -90.0], [30.0, -90.0]]
+                 ],
+                 "type" => "Polygon"
+               }
              } = json_response(conn, 200)["data"]
     end
 
@@ -61,8 +82,15 @@ defmodule ZeexWeb.PartnerControllerTest do
       assert %{
                "id" => ^id,
                "document" => "some updated document",
-               "owner_name" => "some updated owner_name",
-               "trading_name" => "some updated trading_name"
+               "ownerName" => "some updated owner_name",
+               "tradingName" => "some updated trading_name",
+               "address" => %{"coordinates" => [30.0, -90.0], "type" => "Point"},
+               "coverageArea" => %{
+                 "coordinates" => [
+                   [[30.0, -90.0], [30.0, -89.0], [31.0, -89.0], [31.0, -90.0], [30.0, -90.0]]
+                 ],
+                 "type" => "Polygon"
+               }
              } = json_response(conn, 200)["data"]
     end
 

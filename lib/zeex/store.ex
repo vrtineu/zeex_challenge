@@ -101,4 +101,17 @@ defmodule Zeex.Store do
   def change_partner(%Partner{} = partner, attrs \\ %{}) do
     Partner.changeset(partner, attrs)
   end
+
+  defp is_valid_geo?(geo) do
+    is_map(geo) && Map.has_key?(geo, "type") && is_bitstring(Map.get(geo, "type")) &&
+      Map.has_key?(geo, "coordinates") && is_list(Map.get(geo, "coordinates"))
+  end
+
+  def decode_geo(geo) do
+    if is_valid_geo?(geo) do
+      {:ok, geo}
+    else
+      {:error, :invalid_geo}
+    end
+  end
 end

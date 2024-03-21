@@ -14,8 +14,8 @@ defmodule ZeexWeb.PartnerController do
   def create(conn, _params_from_client) do
     partner_params = conn.private[:transformed_params] |> Map.get("partner")
 
-    with {:ok, address} <- Geo.JSON.decode(partner_params["address"]),
-         {:ok, coverage_area} <- Geo.JSON.decode(partner_params["coverage_area"]),
+    with {:ok, address} <- Store.decode_geo(partner_params["address"]),
+         {:ok, coverage_area} <- Store.decode_geo(partner_params["coverage_area"]),
          {:ok, %Partner{} = partner} <-
            Store.create_partner(%{
              partner_params

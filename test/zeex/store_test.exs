@@ -21,7 +21,13 @@ defmodule Zeex.StoreTest do
     end
 
     test "create_partner/1 with valid data creates a partner" do
-      valid_attrs = %{trading_name: "some trading_name", owner_name: "some owner_name", document: "some document"}
+      valid_attrs = %{
+        trading_name: "some trading_name",
+        owner_name: "some owner_name",
+        document: "some document",
+        address: Geo.WKT.decode("POINT(30 -90)"),
+        coverage_area: Geo.WKT.decode("POLYGON((30 -90, 30 -89, 31 -89, 31 -90, 30 -90))")
+      }
 
       assert {:ok, %Partner{} = partner} = Store.create_partner(valid_attrs)
       assert partner.trading_name == "some trading_name"
@@ -35,7 +41,12 @@ defmodule Zeex.StoreTest do
 
     test "update_partner/2 with valid data updates the partner" do
       partner = partner_fixture()
-      update_attrs = %{trading_name: "some updated trading_name", owner_name: "some updated owner_name", document: "some updated document"}
+
+      update_attrs = %{
+        trading_name: "some updated trading_name",
+        owner_name: "some updated owner_name",
+        document: "some updated document"
+      }
 
       assert {:ok, %Partner{} = partner} = Store.update_partner(partner, update_attrs)
       assert partner.trading_name == "some updated trading_name"
