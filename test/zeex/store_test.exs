@@ -70,5 +70,23 @@ defmodule Zeex.StoreTest do
       partner = partner_fixture()
       assert %Ecto.Changeset{} = Store.change_partner(partner)
     end
+
+    test "decode_geo/1 returns :ok with valid geo" do
+      geo = %{
+        "type" => "Point",
+        "coordinates" => [30, -90]
+      }
+
+      assert {:ok, _} = Store.decode_geo(geo)
+    end
+
+    test "decode_geo/1 returns :error with invalid geo" do
+      geo = %{
+        "type" => "Point",
+        "coordinates" => "invalid"
+      }
+
+      assert {:error, :invalid_geo} = Store.decode_geo(geo)
+    end
   end
 end
