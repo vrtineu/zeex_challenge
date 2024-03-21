@@ -107,9 +107,24 @@ defmodule Zeex.Store do
       Map.has_key?(geo, "coordinates") && is_list(Map.get(geo, "coordinates"))
   end
 
+  @doc """
+  Decodes a GeoJSON object.
+
+  ## Examples
+
+      iex> decode_geo(%{"type" => "Point", "coordinates" => [1, 2]})
+      {:ok, %Geo.Point{}}
+
+      iex> decode_geo(%{"type" => "MultiPolygon", "coordinates" => [[[1, 2], [3, 4]]]})
+      {:ok, %Geo.MultiPolygon{}}
+
+      iex> decode_geo(%{"type" => "Point", "coordinates" => "invalid"})
+      {:error, :invalid_geo}
+
+  """
   def decode_geo(geo) do
     if is_valid_geo?(geo) do
-      {:ok, geo}
+      Geo.JSON.decode(geo)
     else
       {:error, :invalid_geo}
     end
