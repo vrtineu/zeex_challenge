@@ -8,17 +8,20 @@ defmodule Zeex.StoreFixtures do
   Generate a partner.
   """
   def partner_fixture(attrs \\ %{}) do
-    {:ok, address} = Geo.WKT.decode("POINT(30 -90)")
-    {:ok, coverage_area} = Geo.WKT.decode("POLYGON((30 -90, 30 -89, 31 -89, 31 -90, 30 -90))")
-
     {:ok, partner} =
       attrs
       |> Enum.into(%{
         document: "some document",
         owner_name: "some owner_name",
         trading_name: "some trading_name",
-        address: address,
-        coverage_area: coverage_area
+        address: %{
+          "type" => "Point",
+          "coordinates" => [30, -90]
+        },
+        coverage_area: %{
+          "type" => "Polygon",
+          "coordinates" => [[[30, -90], [30, -89], [31, -89], [31, -90], [30, -90]]]
+        }
       })
       |> Zeex.Store.create_partner()
 

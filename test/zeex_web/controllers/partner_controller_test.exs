@@ -10,12 +10,12 @@ defmodule ZeexWeb.PartnerControllerTest do
     owner_name: "some owner_name",
     document: "some document",
     address: %{
-      coordinates: [30, -90],
-      type: "Point"
+      "coordinates" => [30, -90],
+      "type" => "Point"
     },
     coverageArea: %{
-      coordinates: [[[30, -90], [30, -89], [31, -89], [31, -90], [30, -90]]],
-      type: "Polygon"
+      "coordinates" => [[[30, -90], [30, -89], [31, -89], [31, -90], [30, -90]]],
+      "type" => "Polygon"
     }
   }
   @update_attrs %{
@@ -116,5 +116,34 @@ defmodule ZeexWeb.PartnerControllerTest do
   defp create_partner(_) do
     partner = partner_fixture()
     %{partner: partner}
+  end
+
+  defp create_partner_list(_) do
+    partners =
+      Enum.map(1..3, fn _ ->
+        partner_fixture(
+          address: %{
+            "coordinates" => [
+              :rand.uniform(90) - 45,
+              :rand.uniform(180) - 90
+            ],
+            "type" => "Point"
+          },
+          coverageArea: %{
+            "coordinates" => [
+              [
+                [:rand.uniform(90) - 45, :rand.uniform(180) - 90],
+                [:rand.uniform(90) - 45, :rand.uniform(180) - 90],
+                [:rand.uniform(90) - 45, :rand.uniform(180) - 90],
+                [:rand.uniform(90) - 45, :rand.uniform(180) - 90],
+                [:rand.uniform(90) - 45, :rand.uniform(180) - 90]
+              ]
+            ],
+            "type" => "Polygon"
+          }
+        )
+      end)
+
+    %{partners: partners}
   end
 end
