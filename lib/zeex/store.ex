@@ -4,8 +4,9 @@ defmodule Zeex.Store do
   """
 
   import Ecto.Query, warn: false
-  alias Zeex.Repo
+  import Geo.PostGIS
 
+  alias Zeex.Repo
   alias Zeex.Store.Partner
 
   @doc """
@@ -128,5 +129,21 @@ defmodule Zeex.Store do
     else
       {:error, :invalid_geo}
     end
+  end
+
+  def nearest_partner!(lat, lng) do
+    {float_lat, _} = Float.parse(lat)
+    {float_lng, _} = Float.parse(lng)
+
+    point = %Geo.Point{coordinates: {float_lng, float_lat}}
+
+    query =
+      from p in Partner,
+        select: p,
+        where: st_intersects(p.coverage_area, ^point),
+        order_by: st_distance(p.address, ^point),
+        limit: 1
+
+    Repo.one!(query)
   end
 end

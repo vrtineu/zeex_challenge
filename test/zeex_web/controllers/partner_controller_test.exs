@@ -113,37 +113,30 @@ defmodule ZeexWeb.PartnerControllerTest do
     end
   end
 
+  describe "find nearest partner" do
+    setup [:create_partner]
+
+    test "finds nearest partner", %{conn: conn, partner: %Partner{id: id}} do
+      conn = get(conn, ~p"/api/partners/nearest?lat=-90&lng=30")
+
+      assert %{
+               "id" => ^id,
+               "document" => "some document",
+               "ownerName" => "some owner_name",
+               "tradingName" => "some trading_name",
+               "address" => %{"coordinates" => [30.0, -90.0], "type" => "Point"},
+               "coverageArea" => %{
+                 "coordinates" => [
+                   [[30.0, -90.0], [30.0, -89.0], [31.0, -89.0], [31.0, -90.0], [30.0, -90.0]]
+                 ],
+                 "type" => "Polygon"
+               }
+             } = json_response(conn, 200)["data"]
+    end
+  end
+
   defp create_partner(_) do
     partner = partner_fixture()
     %{partner: partner}
-  end
-
-  defp create_partner_list(_) do
-    partners =
-      Enum.map(1..3, fn _ ->
-        partner_fixture(
-          address: %{
-            "coordinates" => [
-              :rand.uniform(90) - 45,
-              :rand.uniform(180) - 90
-            ],
-            "type" => "Point"
-          },
-          coverageArea: %{
-            "coordinates" => [
-              [
-                [:rand.uniform(90) - 45, :rand.uniform(180) - 90],
-                [:rand.uniform(90) - 45, :rand.uniform(180) - 90],
-                [:rand.uniform(90) - 45, :rand.uniform(180) - 90],
-                [:rand.uniform(90) - 45, :rand.uniform(180) - 90],
-                [:rand.uniform(90) - 45, :rand.uniform(180) - 90]
-              ]
-            ],
-            "type" => "Polygon"
-          }
-        )
-      end)
-
-    %{partners: partners}
   end
 end

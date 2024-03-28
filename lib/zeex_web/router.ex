@@ -8,6 +8,7 @@ defmodule ZeexWeb.Router do
   scope "/api", ZeexWeb do
     pipe_through :api
 
+    get "/partners/nearest", PartnerController, :nearest
     resources "/partners", PartnerController, except: [:new, :edit]
   end
 

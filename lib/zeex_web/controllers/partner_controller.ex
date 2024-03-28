@@ -42,4 +42,9 @@ defmodule ZeexWeb.PartnerController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def nearest(conn, %{"lat" => lat, "lng" => lng}) do
+    partner = Store.nearest_partner!(lat, lng)
+    render(conn, :show, partner: partner)
+  end
 end
