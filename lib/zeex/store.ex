@@ -131,6 +131,18 @@ defmodule Zeex.Store do
     end
   end
 
+  @doc """
+  Returns the nearest partner to a given point.
+
+  ## Examples
+
+      iex> nearest_partner!(1, 2)
+      %Partner{}
+
+      iex> nearest_partner!(3, 4)
+      ** (Ecto.NoResultsError)
+
+  """
   def nearest_partner!(lat, lng) do
     {float_lat, _} = Float.parse(lat)
     {float_lng, _} = Float.parse(lng)
