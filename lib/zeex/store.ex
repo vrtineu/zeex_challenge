@@ -137,13 +137,23 @@ defmodule Zeex.Store do
 
     point = %Geo.Point{coordinates: {float_lng, float_lat}}
 
-    query =
-      from p in Partner,
-        select: p,
-        where: st_intersects(p.coverage_area, ^point),
-        order_by: st_distance(p.address, ^point),
-        limit: 1
+    stores_containing_point =
+      from(
+        p in Partner,
+        where: st_contains(p.coverage_area, ^point),
+        select: %{id: p.id, st_distance: st_distance(p.address, ^point)}
+      )
 
-    Repo.one!(query)
+    nearest_store =
+      from(
+        p in Partner,
+        join: store in subquery(stores_containing_point),
+        on: p.id == store.id,
+        order_by: [asc: store.st_distance],
+        limit: 1,
+        select: p
+      )
+
+    Repo.one!(nearest_store)
   end
 end
