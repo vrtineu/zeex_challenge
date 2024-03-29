@@ -117,7 +117,7 @@ defmodule ZeexWeb.PartnerControllerTest do
     setup [:create_partner]
 
     test "finds nearest partner", %{conn: conn, partner: %Partner{id: id}} do
-      conn = get(conn, ~p"/api/partners/nearest?lat=-90&lng=30")
+      conn = get(conn, ~p"/api/partners/nearest?lat=-89.5&lng=30.1")
 
       assert %{
                "id" => ^id,
