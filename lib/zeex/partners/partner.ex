@@ -1,4 +1,4 @@
-defmodule Zeex.Store.Partner do
+defmodule Zeex.Partners.Partner do
   use Ecto.Schema
   import Ecto.Changeset
 

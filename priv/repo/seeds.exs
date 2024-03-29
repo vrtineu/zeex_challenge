@@ -14,7 +14,7 @@ json = File.read!("challenge/pdvs.json")
 %{"pdvs" => pdvs} = Jason.decode!(json)
 
 for pdv <- pdvs do
-  Zeex.Store.create_partner(%{
+  Zeex.Partners.create_partner(%{
     address: Geo.JSON.decode(pdv["address"]),
     coverage_area: Geo.JSON.decode(pdv["coverageArea"]),
     document: pdv["document"],

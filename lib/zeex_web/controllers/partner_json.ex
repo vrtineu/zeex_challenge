@@ -1,5 +1,5 @@
 defmodule ZeexWeb.PartnerJSON do
-  alias Zeex.Store.Partner
+  alias Zeex.Partners.Partner
 
   @doc """
   Renders a list of partners.

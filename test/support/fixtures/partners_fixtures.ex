@@ -1,7 +1,7 @@
-defmodule Zeex.StoreFixtures do
+defmodule Zeex.PartnersFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Zeex.Store` context.
+  entities via the `Zeex.Partners` context.
   """
 
   @doc """
@@ -23,7 +23,7 @@ defmodule Zeex.StoreFixtures do
           "coordinates" => [[[30, -90], [30, -89], [31, -89], [31, -90], [30, -90]]]
         }
       })
-      |> Zeex.Store.create_partner()
+      |> Zeex.Partners.create_partner()
 
     partner
   end

@@ -1,23 +1,23 @@
-defmodule Zeex.StoreTest do
+defmodule Zeex.PartnersTest do
   use Zeex.DataCase
 
-  alias Zeex.Store
+  alias Zeex.Partners
 
   describe "partners" do
-    alias Zeex.Store.Partner
+    alias Zeex.Partners.Partner
 
-    import Zeex.StoreFixtures
+    import Zeex.PartnersFixtures
 
     @invalid_attrs %{trading_name: nil, owner_name: nil, document: nil}
 
     test "list_partners/0 returns all partners" do
       partner = partner_fixture()
-      assert Store.list_partners() == [partner]
+      assert Partners.list_partners() == [partner]
     end
 
     test "get_partner!/1 returns the partner with given id" do
       partner = partner_fixture()
-      assert Store.get_partner!(partner.id) == partner
+      assert Partners.get_partner!(partner.id) == partner
     end
 
     test "create_partner/1 with valid data creates a partner" do
@@ -35,14 +35,14 @@ defmodule Zeex.StoreTest do
         }
       }
 
-      assert {:ok, %Partner{} = partner} = Store.create_partner(valid_attrs)
+      assert {:ok, %Partner{} = partner} = Partners.create_partner(valid_attrs)
       assert partner.trading_name == "some trading_name"
       assert partner.owner_name == "some owner_name"
       assert partner.document == "some document"
     end
 
     test "create_partner/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Store.create_partner(@invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} = Partners.create_partner(@invalid_attrs)
     end
 
     test "update_partner/2 with valid data updates the partner" do
@@ -62,7 +62,7 @@ defmodule Zeex.StoreTest do
         }
       }
 
-      assert {:ok, %Partner{} = partner} = Store.update_partner(partner, update_attrs)
+      assert {:ok, %Partner{} = partner} = Partners.update_partner(partner, update_attrs)
       assert partner.trading_name == "some updated trading_name"
       assert partner.owner_name == "some updated owner_name"
       assert partner.document == "some updated document"
@@ -77,19 +77,19 @@ defmodule Zeex.StoreTest do
 
     test "update_partner/2 with invalid data returns error changeset" do
       partner = partner_fixture()
-      assert {:error, %Ecto.Changeset{}} = Store.update_partner(partner, @invalid_attrs)
-      assert partner == Store.get_partner!(partner.id)
+      assert {:error, %Ecto.Changeset{}} = Partners.update_partner(partner, @invalid_attrs)
+      assert partner == Partners.get_partner!(partner.id)
     end
 
     test "delete_partner/1 deletes the partner" do
       partner = partner_fixture()
-      assert {:ok, %Partner{}} = Store.delete_partner(partner)
-      assert_raise Ecto.NoResultsError, fn -> Store.get_partner!(partner.id) end
+      assert {:ok, %Partner{}} = Partners.delete_partner(partner)
+      assert_raise Ecto.NoResultsError, fn -> Partners.get_partner!(partner.id) end
     end
 
     test "change_partner/1 returns a partner changeset" do
       partner = partner_fixture()
-      assert %Ecto.Changeset{} = Store.change_partner(partner)
+      assert %Ecto.Changeset{} = Partners.change_partner(partner)
     end
 
     test "decode_geo/1 returns :ok with valid geo" do
@@ -98,7 +98,7 @@ defmodule Zeex.StoreTest do
         "coordinates" => [30, -90]
       }
 
-      assert {:ok, _} = Store.decode_geo(geo)
+      assert {:ok, _} = Partners.decode_geo(geo)
     end
 
     test "decode_geo/1 returns :error with invalid geo" do
@@ -107,7 +107,7 @@ defmodule Zeex.StoreTest do
         "coordinates" => "invalid"
       }
 
-      assert {:error, :invalid_geo} = Store.decode_geo(geo)
+      assert {:error, :invalid_geo} = Partners.decode_geo(geo)
     end
   end
 end

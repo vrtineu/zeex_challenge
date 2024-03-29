@@ -1,9 +1,9 @@
 defmodule ZeexWeb.PartnerControllerTest do
   use ZeexWeb.ConnCase
 
-  import Zeex.StoreFixtures
+  import Zeex.PartnersFixtures
 
-  alias Zeex.Store.Partner
+  alias Zeex.Partners.Partner
 
   @create_attrs %{
     trading_name: "some trading_name",

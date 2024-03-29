@@ -1,13 +1,13 @@
-defmodule Zeex.Store do
+defmodule Zeex.Partners do
   @moduledoc """
-  The Store context.
+  The Partners context.
   """
 
   import Ecto.Query, warn: false
   import Geo.PostGIS
 
   alias Zeex.Repo
-  alias Zeex.Store.Partner
+  alias Zeex.Partners.Partner
 
   @doc """
   Returns the list of partners.
